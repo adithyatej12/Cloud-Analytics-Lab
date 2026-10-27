@@ -1,0 +1,1 @@
+{"name":"DS_BlobSource_CSV","properties":{"linkedServiceName":{"referenceName":"LS_BlobSource","type":"LinkedServiceReference"},"type":"DelimitedText","typeProperties":{"columnDelimiter":",","firstRowAsHeader":true,"location":{"container":"<source-container>","fileName":"student_performance.csv","type":"AzureBlobStorageLocation"},"quoteChar":"\""}}}

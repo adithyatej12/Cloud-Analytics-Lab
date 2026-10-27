@@ -1,0 +1,1 @@
+{"name":"DS_ADLS_Sink_CSV","properties":{"linkedServiceName":{"referenceName":"LS_ADLS_Sink","type":"LinkedServiceReference"},"type":"DelimitedText","typeProperties":{"columnDelimiter":",","firstRowAsHeader":true,"location":{"fileName":"student_performance.csv","fileSystem":"rawdata","type":"AzureBlobFSLocation"},"quoteChar":"\""}}}

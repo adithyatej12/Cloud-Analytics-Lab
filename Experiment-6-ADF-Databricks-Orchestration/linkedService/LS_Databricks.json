@@ -1,0 +1,1 @@
+{"name":"LS_Databricks","properties":{"type":"AzureDatabricks","typeProperties":{"authentication":"MSI","domain":"https://adb-7405609713574305.5.azuredatabricks.net","newClusterNodeType":"Standard_DS3_v2","newClusterNumOfWorkers":1,"newClusterVersion":"14.3.x-scala2.12","workspaceResourceId":"<workspace resource ID for calab-databricks-141>"}}}
