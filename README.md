@@ -11,6 +11,7 @@ A collection of Azure Cloud Analytics and Data Engineering experiments implement
 | 3 | Query and analyze structured and unstructured data from Azure Data Lake Storage | Azure Synapse Analytics, ADLS Gen2, Serverless SQL |
 | 4 | Azure Data Factory - On-Premises SQL Server to Azure Blob Storage | Azure Data Factory, SQL Server, Blob Storage |
 | 5 | Real-time streaming data processing using Databricks and Azure Event Hub | Azure Event Hubs, Azure Databricks, ADLS Gen2 |
+| 6 | End-to-end data pipeline orchestration using Azure Data Factory and Azure Databricks | Azure Data Factory, Azure Databricks, ADLS Gen2 |
 
 ## Repository Structure
 
@@ -22,5 +23,6 @@ Cloud-Analytics-Lab/
 ├── Experiment-3-Synapse-ADLS-Analytics/
 ├── Experiment-4-ADF-OnPrem-SQL-to-Blob/
 ├── Experiment-5-Databricks-EventHub-Streaming/
+├── Experiment-6-ADF-Databricks-Orchestration/
 └── README.md
 ```
