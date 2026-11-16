@@ -24,15 +24,15 @@ A collection of Azure Cloud Analytics and Data Engineering experiments implement
 ```text
 Cloud-Analytics-Lab/
 │
-├── Experiment-1-ADF-OnPrem-SQL-to-Blob/
-├── Experiment-2-Synapse-Dedicated-SQL-Pool/
-├── Experiment-3-Synapse-ADLS-Analytics/
-├── Experiment-4-ADF-OnPrem-SQL-to-Blob/
-├── Experiment-5-Databricks-EventHub-Streaming/
-├── Experiment-6-ADF-Databricks-Orchestration/
-├── Experiment-7-PowerBI-AzureSQL-Dashboard/
-├── Experiment-8-PowerBI-Synapse-Analytics/
-├── Experiment-9-EndToEnd-Pipeline-PowerBI/
+├── Experiment-01-ADF-OnPrem-SQL-to-Blob/
+├── Experiment-02-Synapse-Dedicated-SQL-Pool/
+├── Experiment-03-Synapse-ADLS-Analytics/
+├── Experiment-04-ADF-OnPrem-SQL-to-Blob/
+├── Experiment-05-Databricks-EventHub-Streaming/
+├── Experiment-06-ADF-Databricks-Orchestration/
+├── Experiment-07-PowerBI-AzureSQL-Dashboard/
+├── Experiment-08-PowerBI-Synapse-Analytics/
+├── Experiment-09-EndToEnd-Pipeline-PowerBI/
 ├── Experiment-10-AzureML-HyperDrive-Tuning/
 ├── Experiment-11-AzureML-Model-Deployment-REST-API/
 ├── Experiment-12-AzureML-AutoML-Classification/
