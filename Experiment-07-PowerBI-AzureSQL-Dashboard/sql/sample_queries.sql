@@ -3,7 +3,7 @@
 -- Course: Cloud Analytics (25MCAR0141), Course Outcome CO3.
 --
 -- Sample queries against the student_performance table in database
--- calab-sqldb-141 (server <server-name>, resource group 25MCAR0141).
+-- calab-sqldb-142 (server calab-sql-142, resource group 25MCAR0142).
 -- Run these in the query editor after loading the table with
 -- create_student_performance.sql, and record the observed values.
 

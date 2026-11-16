@@ -3,12 +3,12 @@
 -- Course: Cloud Analytics (25MCAR0141), Course Outcome CO3.
 --
 -- Run this script in the Azure SQL Database query editor against
--- database calab-sqldb-141 (server <server-name>, resource group
--- 25MCAR0141, region centralindia).
+-- database calab-sqldb-142 (server calab-sql-142, resource group
+-- 25MCAR0142, region centralindia).
 --
 -- No credentials are stored in this file. Sign in to the query editor
--- with the SQL admin login created in the portal (<username> /
--- <password> placeholders only - never write real credentials here).
+-- with the SQL admin login created in the portal (sqladmin - never
+-- write the real password here).
 
 CREATE TABLE student_performance (
     student_id INT PRIMARY KEY,

@@ -21,9 +21,9 @@ To connect Power BI Desktop to an Azure SQL Database, build DAX measures and a d
 ## Architecture
 
 ```text
-Azure SQL Database (calab-sqldb-141)
+Azure SQL Database (calab-sqldb-142)
         |  Table: student_performance
-        |  Server: <server-name> (placeholder - see Procedure)
+        |  Server: calab-sql-142
         v
 Power BI Desktop - Get Data -> Azure SQL Database
         |
@@ -46,10 +46,10 @@ The database is the single source of truth. Power BI never owns the data — in 
 
 | Component | Resource Name | Role / Description |
 |---|---|---|
-| Resource Group | 25MCAR0141 | Logical container for all Azure experiment resources |
-| SQL Server (logical) | `<server-name>` | Logical server hosting the database (replace the placeholder with the server name created in the portal) |
-| SQL Database | calab-sqldb-141 | Azure SQL Database holding the `student_performance` table |
-| Firewall Rule | `<firewall-rule-name>` | Allows the lab machine's public IP to reach the SQL server |
+| Resource Group | 25MCAR0142 | Logical container for all Azure experiment resources |
+| SQL Server (logical) | calab-sql-142 | Logical server hosting the database (`calab-sql-142.database.windows.net`) |
+| SQL Database | calab-sqldb-142 | Azure SQL Database holding the `student_performance` table |
+| Firewall Rule | ClientIPAddress_2026-11-16_12-38-27 | Allows the lab machine's public IP (104.29.206.101) to reach the SQL server |
 | Storage Account | calablake141 | ADLS Gen2 from Experiments 5-6 (rawdata / output) - the source the SQL table mirrors |
 | Databricks Workspace | calab-databricks-141 | Spark platform from Experiments 5-6 (upstream transforms) |
 | Data Factory | calab-adf-141 | Orchestration engine from Experiment 6 (upstream pipeline) |
@@ -68,15 +68,17 @@ The database is the single source of truth. Power BI never owns the data — in 
 
 ### Step 1 — Create the SQL Database
 
-Azure Portal -> SQL databases -> Create -> Resource group `25MCAR0141`, Region `centralindia` -> Database name `calab-sqldb-141` -> Server: Create new, name `<server-name>` (replace with the server name you create; server names must be globally unique) -> Authentication: SQL authentication with admin login `<username>` and password `<password>` (choose them in the portal; do not write real credentials anywhere in this repo).
+Azure Portal -> SQL databases -> Create -> Resource group `25MCAR0142`, Region `centralindia` -> Database name `calab-sqldb-142` -> Server: Create new, name `calab-sql-142` (server names must be globally unique; this name was available) -> Authentication: SQL authentication with admin login `sqladmin` and a password chosen in the portal (do not write real credentials anywhere in this repo).
+
+Tier note (live run, 2026-11-16): the database was created on General Purpose - Serverless, Gen5, 1 vCore maximum (0.5 vCore minimum), auto-pause after 1 hour, 32 GB max data — the portal default — rather than a free/Basic tier. No numeric cost estimate was shown by the portal. The tier can be changed afterwards from the database's Compute + storage blade.
 
 ### Step 2 — Configure the Firewall Rule
 
-SQL server -> Networking -> add a firewall rule named `<firewall-rule-name>` allowing the lab machine's public IP address. (The portal offers an "Add your client IPv4 address" button — use that rather than opening a wide range.)
+SQL server -> Networking -> add a firewall rule allowing the lab machine's public IP address. (The portal offers an "Add your client IPv4 address" button — use that rather than opening a wide range.) Public network access was "Disable" by default, so it was changed to "Selected networks" first. Live run: rule `ClientIPAddress_2026-11-16_12-38-27` for 104.29.206.101.
 
 ### Step 3 — Open the Query Editor
 
-SQL database `calab-sqldb-141` -> Query editor -> sign in with `<username>` / `<password>`.
+SQL database `calab-sqldb-142` -> Query editor -> sign in with `sqladmin` / the password chosen at server creation.
 
 ### Step 4 — Create and Load the Table
 
@@ -84,11 +86,11 @@ Run `sql/create_student_performance.sql` (in this folder) in the query editor. I
 
 ### Step 5 — Verify the Data
 
-Run the queries in `sql/sample_queries.sql` — average score by subject, pass rate (average >= 40), and top students. Confirm 12 rows are present before moving to Power BI.
+Run the queries in `sql/sample_queries.sql` — average score by subject, pass rate (average >= 40), and top students. Confirm 12 rows are present before moving to Power BI. Live run (2026-11-16): `SELECT COUNT(*)` returned 12.
 
 ### Step 6 — Connect Power BI Desktop to Azure SQL
 
-Power BI Desktop -> Get Data -> Azure SQL Database -> Server: `<server-name>.database.windows.net` -> Database: `calab-sqldb-141` -> sign in with `<username>` / `<password>`. (Use the placeholders here; never paste a real connection string or password into a file or screenshot.)
+Power BI Desktop -> Get Data -> Azure SQL Database -> Server: `calab-sql-142.database.windows.net` -> Database: `calab-sqldb-142` -> sign in with `sqladmin` / the password chosen at server creation. (Never paste a real connection string or password into a file or screenshot.)
 
 ### Step 7 — Choose Import Mode First
 
@@ -110,7 +112,7 @@ Publish the report to the Power BI service, then set a scheduled refresh on the 
 
 ### Step 11 — Repeat the Connection in DirectQuery Mode
 
-Back in Power BI Desktop, connect again to the same database, this time choosing DirectQuery. Rebuild the same visuals (or copy the report pages). No data is imported — every slicer click and filter sends a live query to `calab-sqldb-141`.
+Back in Power BI Desktop, connect again to the same database, this time choosing DirectQuery. Rebuild the same visuals (or copy the report pages). No data is imported — every slicer click and filter sends a live query to `calab-sqldb-142`.
 
 ### Step 12 — Test Near-Real-Time Behaviour
 
@@ -172,7 +174,7 @@ FROM student_performance
 ORDER BY average_score DESC;
 ```
 
-Run these in the query editor and record the observed values here — do not copy numbers from anywhere else; the values depend on the data actually loaded.
+Observed values (live run, 2026-11-16, verified against the loaded rows): average Math 70.83, English 70.92, Science 70.33; pass rate 91.67% (11 of 12 students, average >= 40 — only Karthik Menon, 34.67, is below 40); top 5 by average: Ananya Gupta 93.00, Priya Nair 90.00, Kavya Singh 88.33, Vikram Rao 84.67, Aarav Sharma 81.67.
 
 ## DAX Highlights
 
@@ -214,7 +216,7 @@ DirectQuery queries the live database on each interaction, so a dashboard visual
 
 | # | Screenshot | Filename |
 |---|---|---|
-| 1 | Azure Portal — SQL database calab-sqldb-141 overview | Step_01_SQL_Database_Overview.png |
+| 1 | Azure Portal — SQL database calab-sqldb-142 overview | Step_01_SQL_Database_Overview.png |
 | 2 | SQL server firewall rule configuration | Step_02_Firewall_Rule_Config.png |
 | 3 | Query editor — create_student_performance.sql executed (12 rows inserted) | Step_03_Table_Created_Rows_Inserted.png |
 | 4 | Query editor — sample queries output (average by subject, pass rate, top students) | Step_04_Sample_Queries_Output.png |
@@ -231,7 +233,9 @@ Note: screenshots are not in this folder yet — add them under `screenshots/` u
 
 ## Result
 
-A successful run demonstrates: an Azure SQL Database (`calab-sqldb-141`) holding a 12-row `student_performance` table; Power BI Desktop connected to it in both Import and DirectQuery modes; DAX measures for Average Score and Pass Rate %; and a dashboard with a bar chart of average score by subject, KPI cards, and a student slicer. In Import mode the dashboard shows the snapshot from the last refresh; in DirectQuery mode the visuals query the live database on each interaction, so an updated score appears after interacting with the report. Record the observed values here: the average score by subject, the pass rate, and the refresh behaviour observed in each mode.
+A successful run demonstrates: an Azure SQL Database (`calab-sqldb-142`) holding a 12-row `student_performance` table; Power BI Desktop connected to it in both Import and DirectQuery modes; DAX measures for Average Score and Pass Rate %; and a dashboard with a bar chart of average score by subject, KPI cards, and a student slicer. In Import mode the dashboard shows the snapshot from the last refresh; in DirectQuery mode the visuals query the live database on each interaction, so an updated score appears after interacting with the report.
+
+Observed values (live run, 2026-11-16): 12 rows loaded; average Math 70.83, English 70.92, Science 70.33; pass rate 91.67% (11/12). The Azure half (database, firewall, table, verification queries) is verified; the Power BI half (Import/DirectQuery dashboards and refresh behaviour) is still to be run — record its observed values here when it is done.
 
 ## Key Learning
 
